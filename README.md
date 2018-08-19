@@ -1,3 +1,6 @@
+!!!!!!!! WORK IN PROGRESS !!!!!!!!!
+
+
 # homebridge-http-sprinkler
 A switch plugin for homebridge (https://github.com/nfarina/homebridge) which integrates with HTTP(S) APIs.
 
