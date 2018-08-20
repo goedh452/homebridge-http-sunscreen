@@ -24,10 +24,7 @@ function HttpSunscreen(log, config)
 	this.jsonPath		= config["jsonPath"];
 	this.httpMethod         = config["httpMethod"]   	|| "GET";
 	
-	
-	this.get_current_position_callbacks = [];
-	this.get_target_position_callbacks = [];
-	this.get_current_state_callbacks = [];	
+	this.targetPosition = 100;	
 }
 
 
@@ -90,6 +87,12 @@ HttpSunscreen.prototype =
 		}.bind(this));
 	},
 	
+	getTargetPosition: function(callback)
+	{
+		this.log("FUNCTION getTargetPosition");
+		callback(null, this.targetPosition);
+	},
+	
 	
 	setTargetPosition: function (position, callback) 
 	{
@@ -134,12 +137,7 @@ HttpSunscreen.prototype =
 			.on('get', this.getCurrentPosition.bind(this));
 
     		this.sunscreenService.getCharacteristic(Characteristic.TargetPosition)
-			.on('get', function(callback) {
-        			this.log("TargetPosition getter");
-				this.sunscreenService.getCharacteristic(Characteristic.TargetPosition).setValue(0);
-				callback();
-    			}.bind(this))
-		
+			.on('get', this.getTargetPosition.bind(this))
 			.on('set', this.setTargetPosition.bind(this));
 
 		this.sunscreenService.getCharacteristic(Characteristic.PositionState)
