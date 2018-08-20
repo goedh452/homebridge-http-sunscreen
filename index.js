@@ -96,8 +96,6 @@ HttpSunscreen.prototype =
 		var url;
 		var body;
 		
-		this.log("FUNCTION: setTargetPosition");
-		
 		if (!this.levelUrl) 
 		{
 			this.log("Ignoring request: Level URL not defined in config");
@@ -137,14 +135,14 @@ HttpSunscreen.prototype =
 
     		this.sunscreenService.getCharacteristic(Characteristic.TargetPosition)
 			.on('get', function(callback) {
-        			null;
+        			this.log("TargetPosition getter");
     			}.bind(this))
 		
 			.on('set', this.setTargetPosition.bind(this));
 
 		this.sunscreenService.getCharacteristic(Characteristic.PositionState)
 			.on('get', function() {
-        			null;
+        			this.log("PositionState getter");
     			}.bind(this));
 		
 		
