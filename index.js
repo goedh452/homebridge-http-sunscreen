@@ -68,13 +68,13 @@ HttpSunscreen.prototype =
 			return;
 		}
 
-		var url = this.levelUrl;
+		var url = this.statusUrl;
 				
 		this.httpRequest(url, "", "GET", function (error, response, responseBody) 
 		{
 			if (error) 
 			{
-				this.log('HTTP get status function failed: %s', error.message);
+				this.log('HTTP get current position function failed: %s', error.message);
 				callback(error);
 			}
 			else 
