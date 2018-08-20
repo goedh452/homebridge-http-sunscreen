@@ -58,7 +58,7 @@ HttpSunscreen.prototype =
 	},
 		
 
-	getCurrentPosition: function (callback) 
+	getCurrentPosition: function (position, callback) 
 	{
 		
 		if (!this.levelUrl || !this.jsonPath) 
@@ -70,7 +70,7 @@ HttpSunscreen.prototype =
 
 		var url = this.statusUrl;
 				
-		this.httpRequest(url, "", "GET", function (error, response, responseBody) 
+		this.httpRequest(url, "", this.httpMethod, function (error, response, responseBody) 
 		{
 			if (error) 
 			{
@@ -106,7 +106,7 @@ HttpSunscreen.prototype =
 		this.log('Setting new target position: ' + position + ' => ' + this.levelUrl.replace('%position%', position));
 		url = this.levelUrl.replace('%position%', position);		
 		
-		this.httpRequest(url, "", "GET", function (error, response, body)
+		this.httpRequest(url, "", this.httpMethod, function (error, response, body)
 		{
 			if (error)
 			{
@@ -136,6 +136,7 @@ HttpSunscreen.prototype =
     		this.sunscreenService.getCharacteristic(Characteristic.TargetPosition)
 			.on('get', function(callback) {
         			this.log("TargetPosition getter");
+				this.sunscreenService.getCharacteristic(Characteristic.TargetPosition).setValue(0);
 				callback();
     			}.bind(this))
 		
