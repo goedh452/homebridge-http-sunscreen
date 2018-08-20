@@ -81,10 +81,10 @@ HttpSunscreen.prototype =
 				
 				this.log('Current position: ' + level);
 			 	this.sunscreenService.getCharacteristic(Characteristic.CurrentPosition).setValue(level);
-				
-				callback();
 			}
 		}.bind(this));
+		
+		callback();
 	},
 	
 	getTargetPosition: function(callback)
