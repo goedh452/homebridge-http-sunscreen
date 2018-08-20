@@ -1,7 +1,7 @@
 {
-  "name": "homebridge-http-sprinkler",
+  "name": "homebridge-http-sunscreen",
   "version": "1.0.0",
-  "description": "Homebridge sprinkler control through HTTP",
+  "description": "Homebridge sunscreen control through HTTP",
   "license": "ISC",
   "keywords": [
   "homebridge-plugin"
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/goedh452/homebridge-http-sprinkler"
+    "url": "git://github.com/goedh452/homebridge-http-sunscreen"
   },
   "dependencies": {
     "polling-to-event": ">=2.1.0",
