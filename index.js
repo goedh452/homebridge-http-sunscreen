@@ -110,7 +110,7 @@ HttpSunscreen.prototype =
 		{
 			if (error)
 			{
-				that.log("HTTP set target position failed %s", error.message);
+				this.log("HTTP set target position failed %s", error.message);
 			} 
 		}.bind(this))	
 		
