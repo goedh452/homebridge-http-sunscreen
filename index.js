@@ -112,7 +112,8 @@ HttpSunscreen.prototype =
 			} 
 		}.bind(this))	
 		
-		this.log("HTTP set target position function succeeded!");
+		this.lastPosition = position;
+		this.log("Set lastPosition to: "this.lastPosition);
 		callback();
 	},
 	
