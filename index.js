@@ -28,7 +28,7 @@ function HttpSunscreen(log, config)
 	// Custom variables
 	this.currentPositionState = 0; // Indicator for Increasing, Decreasing or Idle; ignored by iOS, so always 0
     	this.lastPosition = 0;
-	this.triggeredByIOS = false; // Indicator if the value is set from iOS with the setTargetPosition function
+	this.triggeredByIOS = true; // Indicator if the value is set from iOS with the setTargetPosition function
 	
 	var that = this;
 	
