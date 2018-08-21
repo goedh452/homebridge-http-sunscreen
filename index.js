@@ -26,11 +26,7 @@ function HttpSunscreen(log, config)
 	
 	
 	// Custom variables
-    	this.interval = null;
-    	this.timeout = null;
-    	this.lastPosition = 100;
-    	this.currentPositionState = 2; // stopped by default
-    	this.currentTargetPosition = 100; // up by default
+    	this.lastPosition = 15;
 	
 	var that = this;
 	
@@ -70,7 +66,6 @@ function HttpSunscreen(log, config)
 				
 				that.log('Current position from status polling: ' + level);
 				that.sunscreenService.getCharacteristic(Characteristic.CurrentPosition).updateValue(level);
-				//position = level;
 			} 
 		});
 	}
