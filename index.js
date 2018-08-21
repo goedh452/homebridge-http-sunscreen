@@ -85,10 +85,17 @@ HttpSunscreen.prototype =
 		}.bind(this));
 	},
 	
+	
 	getTargetPosition: function(callback)
 	{
 		this.log("FUNCTION getTargetPosition");
 		this.sunscreenService.getCharacteristic(Characteristic.TargetPosition).updateValue(0);
+	},
+	
+	
+	getPositionState: function(callback)
+	{
+		this.log("FUNCTION getPositionState");
 	},
 	
 	
@@ -135,15 +142,11 @@ HttpSunscreen.prototype =
 			.on('get', this.getCurrentPosition.bind(this));
 
     		this.sunscreenService.getCharacteristic(Characteristic.TargetPosition)
-			.on('get', this.getTargetPosition.bind(this))
+			//.on('get', this.getTargetPosition.bind(this))
 			.on('set', this.setTargetPosition.bind(this));
 
 		this.sunscreenService.getCharacteristic(Characteristic.PositionState)
-			.on('get', function() {
-        			this.log("PositionState getter");
-				callback();
-    			}.bind(this));
-		
+			.on('get', this.getPositionState.bind())	
 		
 		
 //		switch (this.checkStatus)
