@@ -18,9 +18,8 @@ function HttpSunscreen(log, config)
 	// Get config info
 	this.name		= config["name"]          	|| "HTTP Sunscreen";
 	this.levelUrl  	        = config["levelUrl"];
-	this.checkStatus 	= config["checkStatus"]		|| "no";
-	this.pollingInterval    = config["pollingInterval"]   	|| 3000;
 	this.statusUrl          = config["statusUrl"];
+	this.pollingInterval    = config["pollingInterval"]   	|| 3000;
 	this.jsonPath		= config["jsonPath"];
 	this.httpMethod         = config["httpMethod"]   	|| "GET";
 	
@@ -159,7 +158,7 @@ HttpSunscreen.prototype =
 
 		this.sunscreenService = new Service.WindowCovering(this.name);
 		
-		this.log("Set status polling");
+		// Current position determined with polling
 		this.sunscreenService.getCharacteristic(Characteristic.CurrentPosition)
 			.on('get', function (callback) { callback(null, this.position) });
 
