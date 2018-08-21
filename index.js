@@ -26,7 +26,9 @@ function HttpSunscreen(log, config)
 	
 	
 	// Custom variables
-    	this.lastPosition = 0; 
+	this.currentPositionState = 0; // Indicator for Increasing, Decreasing or Idle; ignored by iOS, so always 0
+    	this.lastPosition = 0;
+	this.triggeredByIOS = 0; // Indicator if the value is set from iOS with the setTargetPosition function
 	
 	var that = this;
 	
@@ -66,7 +68,12 @@ function HttpSunscreen(log, config)
 				
 				that.log('Current position from status polling: ' + level);
 				that.sunscreenService.getCharacteristic(Characteristic.CurrentPosition).updateValue(level);
-				that.sunscreenService.getCharacteristic(Characteristic.TargetPosition).updateValue(level);
+				
+				if that.triggeredByIOS = 0
+				{
+					this.log("Movement not triggered by iOS: set TargetPosition to " + level);
+					that.sunscreenService.getCharacteristic(Characteristic.TargetPosition).updateValue(level);
+				}
 			} 
 		});
 	}
@@ -118,6 +125,7 @@ HttpSunscreen.prototype =
 	{
 		var url;
 		var body;
+		this.triggeredByIOS = 1;
 		
 		if (!this.levelUrl) 
 		{
@@ -143,6 +151,7 @@ HttpSunscreen.prototype =
 		
 		this.lastPosition = position;
 		this.log("Set lastPosition to: " + this.lastPosition);
+		this.triggeredByIOS = 0;
 		
 		callback();
 	},
@@ -169,46 +178,6 @@ HttpSunscreen.prototype =
 
 		this.sunscreenService.getCharacteristic(Characteristic.PositionState)
 			.on('get', this.getPositionState.bind())	
-		
-		
-//		switch (this.checkStatus)
-//		{
-//			//Status polling
-//			case "once":
-//				this.log("Check status: once");
-//				var powerState = this.getPowerState.bind(this)
-//				var powerStateInt = 0
-//				
-//				this.valveService
-//					.getCharacteristic(Characteristic.Active)
-//					.on('set', this.setPowerState.bind(this))
-//					.on('get', powerState);
-//				
-//				if (powerState) { powerStateInt = 1 }
-//				else { powerStateInt = 0}
-//				
-//				this.valveService.getCharacteristic(Characteristic.InUse)
-//					.updateValue(powerStateInt);
-//				
-//                        break;
-//			case "polling":
-//				that.log("Check status: polling");
-//				this.valveService
-//					.getCharacteristic(Characteristic.Active)
-//					.on('get', function (callback) 
-//					{ callback(null, that.statusOn) })
-//					
-//					.on('set', this.setPowerStatePolling.bind(this))
-//				
-//			break;
-//			default:
-//				that.log("Check status: default");
-//				this.valveService
-//					.getCharacteristic(Characteristic.Active)
-//					.on('set', this.setPowerState.bind(this))
-//				
-//			break;
-//              }
 		
 		return [this.sunscreenService];
 	}
