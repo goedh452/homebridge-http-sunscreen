@@ -49,7 +49,7 @@ function HttpSunscreen(log, config)
 							done(new Error("Network failure that must not stop homebridge!"));
 						} catch (err) 
 						{
-							that.log(err.message);
+							this.log(err.message);
 						}
 					} 
 				else 
@@ -57,7 +57,7 @@ function HttpSunscreen(log, config)
 					done(null, body);
 				}
 			})
-		}, { longpolling: true, interval: that.pollingInterval, longpollEventName: "statuspoll" });
+		}, { longpolling: true, interval: this.pollingInterval, longpollEventName: "statuspoll" });
 
 
 		statusemitter.on("statuspoll", function (responseBody) 
