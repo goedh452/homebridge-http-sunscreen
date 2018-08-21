@@ -145,9 +145,7 @@ HttpSunscreen.prototype =
 			if (error)
 			{
 				this.log("HTTP set target position failed %s", error.message);
-			} 
-			
-			callback();
+			}
 		}.bind(this))	
 		
 		this.lastPosition = position;
