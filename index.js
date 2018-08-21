@@ -64,7 +64,32 @@ HttpSunscreen.prototype =
 	getCurrentPosition: function (callback) 
 	{
 		this.log("FUNCTION: getCurrentPosition");
-		callback(null, this.lastPosition);
+		
+		if (!this.levelUrl || !this.jsonPath) 
+		{
+			this.log("Ignoring request: Missing status properties in config");
+			callback(new Error("No status url defined."));
+			return;
+		}
+
+		var url = this.statusUrl;
+				
+		this.httpRequest(url, "", this.httpMethod, function (error, response, responseBody) 
+		{
+			if (error) 
+			{
+				this.log('HTTP get current position function failed: %s', error.message);
+				callback(error);
+			}
+			else 
+			{
+				var json = JSON.parse(responseBody);
+				var level = eval("json." + this.jsonPath);
+				
+				this.log('Current position: ' + level);
+				this.lastposition = level;
+			}
+		}.bind(this));
 	},
 	
 	
@@ -99,7 +124,7 @@ HttpSunscreen.prototype =
     		this.log((moveUp ? "Moving up" : "Moving down"));
 		this.sunscreenService.setCharacteristic(Characteristic.PositionState, (moveUp ? 1 : 0));
 		
-		this.log('Setting new target position: ' + position + ' => ' + this.levelUrl.replace('%position%', position));
+		this.log('Setting new target position: ' + position);
 		url = this.levelUrl.replace('%position%', position);
 		
     		this.sunscreenService.setCharacteristic(Characteristic.PositionState, (moveUp ? 1 : 0));
