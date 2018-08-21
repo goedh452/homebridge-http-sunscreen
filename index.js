@@ -28,7 +28,6 @@ function HttpSunscreen(log, config)
 	// Custom variables
 	this.currentPositionState = 0; // Indicator for Increasing, Decreasing or Idle; ignored by iOS, so always 0
     	this.lastPosition = 0;
-	this.triggeredByIOS = false; // Indicator if the value is set from iOS with the setTargetPosition function
 	
 	var that = this;
 	
@@ -68,12 +67,7 @@ function HttpSunscreen(log, config)
 				
 				that.log('Current position from status polling: ' + level);
 				that.sunscreenService.getCharacteristic(Characteristic.CurrentPosition).updateValue(level);
-				
-				if (!that.triggeredByIOS)
-				{
-					that.log("Movement not triggered by iOS: set TargetPosition to " + level);
-					that.lastPosition = level;
-				}
+				that.lastPosition = level;
 			} 
 		});
 	}
@@ -125,7 +119,6 @@ HttpSunscreen.prototype =
 	{
 		var url;
 		var body;
-		this.triggeredByIOS = true;
 		
 		if (!this.levelUrl) 
 		{
@@ -150,7 +143,6 @@ HttpSunscreen.prototype =
 		
 		this.lastPosition = position;
 		this.log("Set lastPosition to: " + this.lastPosition);
-		this.triggeredByIOS = false;
 		
 		callback();
 	},
