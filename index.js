@@ -28,7 +28,7 @@ function HttpSunscreen(log, config)
 	// Custom variables
     	this.interval = null;
     	this.timeout = null;
-    	this.lastPosition = 100; // last known position of the blinds, up by default
+    	this.lastPosition = 100;
     	this.currentPositionState = 2; // stopped by default
     	this.currentTargetPosition = 100; // up by default
 }
@@ -87,8 +87,8 @@ HttpSunscreen.prototype =
 				var level = eval("json." + this.jsonPath);
 				
 				this.log('Current position: ' + level);
-				this.lastposition = level;
-				callback(null, this.lastposition);
+				this.lastPosition = level;
+				callback(null, this.lastPosition);
 			}
 		}.bind(this));
 	},
@@ -96,8 +96,8 @@ HttpSunscreen.prototype =
 	
 	getTargetPosition: function(callback)
 	{
-    		this.log("Requested TargetPosition: %s", this.currentTargetPosition);
-    		callback(null, this.currentTargetPosition);
+    		this.log("Requested TargetPosition: %s", this.lastPosition);
+    		callback(null, this.lastPosition);
 	},
 	
 	
