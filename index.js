@@ -83,6 +83,8 @@ HttpSunscreen.prototype =
 			 	this.sunscreenService.getCharacteristic(Characteristic.CurrentPosition).updateValue(level);
 			}
 		}.bind(this));
+		
+		callback();
 	},
 	
 	
@@ -96,6 +98,7 @@ HttpSunscreen.prototype =
 	getPositionState: function(callback)
 	{
 		this.log("FUNCTION getPositionState");
+		this.sunscreenService.getCharacteristic(Characteristic.PositionState).updateValue(2);
 	},
 	
 	
