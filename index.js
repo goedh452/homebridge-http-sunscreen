@@ -72,7 +72,7 @@ function HttpSunscreen(log, config)
 				if (!that.triggeredByIOS)
 				{
 					that.log("Movement not triggered by iOS: set TargetPosition to " + level);
-					that.sunscreenService.getCharacteristic(Characteristic.TargetPosition).updateValue(level);
+					that.lastPosition = level;
 				}
 			} 
 		});
