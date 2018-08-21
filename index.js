@@ -88,7 +88,7 @@ HttpSunscreen.prototype =
 	getTargetPosition: function(callback)
 	{
 		this.log("FUNCTION getTargetPosition");
-		callback(null, this.targetPosition);
+		callback();
 	},
 	
 	
