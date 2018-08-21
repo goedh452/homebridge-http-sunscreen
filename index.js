@@ -69,7 +69,7 @@ function HttpSunscreen(log, config)
 				that.log('Current position from status polling: ' + level);
 				that.sunscreenService.getCharacteristic(Characteristic.CurrentPosition).updateValue(level);
 				
-				if (that.triggeredByIOS)
+				if (!that.triggeredByIOS)
 				{
 					that.log("Movement not triggered by iOS: set TargetPosition to " + level);
 					that.sunscreenService.getCharacteristic(Characteristic.TargetPosition).updateValue(level);
