@@ -28,7 +28,7 @@ function HttpSunscreen(log, config)
 	// Custom variables
 	this.currentPositionState = 0; // Indicator for Increasing, Decreasing or Idle; ignored by iOS, so always 0
     	this.lastPosition = 0;
-	this.triggeredByIOS = true; // Indicator if the value is set from iOS with the setTargetPosition function
+	this.triggeredByIOS = false; // Indicator if the value is set from iOS with the setTargetPosition function
 	
 	var that = this;
 	
@@ -136,7 +136,6 @@ HttpSunscreen.prototype =
 
 		this.currentTargetPosition = position;
 		const moveUp = (this.currentTargetPosition >= this.lastPosition);
-    		//this.sunscreenService.setCharacteristic(Characteristic.PositionState, (moveUp ? 1 : 0));
 		
 		this.log(moveUp ? "Moving up" + ": Setting new target position: " + position : "Moving down" + ": Setting new target position: " + position);
 		url = this.levelUrl.replace('%position%', position);
@@ -147,6 +146,8 @@ HttpSunscreen.prototype =
 			{
 				this.log("HTTP set target position failed %s", error.message);
 			} 
+			
+			callback();
 		}.bind(this))	
 		
 		this.lastPosition = position;
