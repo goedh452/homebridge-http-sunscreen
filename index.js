@@ -63,7 +63,7 @@ HttpSunscreen.prototype =
 
 	getCurrentPosition: function (callback) 
 	{
-		this.log("FUNCTION: " + getCurrentPosition);
+		this.log("FUNCTION: getCurrentPosition");
 		callback(null, this.lastPosition);
 	},
 	
