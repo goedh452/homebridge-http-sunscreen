@@ -80,7 +80,7 @@ HttpSunscreen.prototype =
 				var level = eval("json." + this.jsonPath);
 				
 				this.log('Current position: ' + level);
-			 	this.sunscreenService.getCharacteristic(Characteristic.CurrentPosition).setValue(level);
+			 	this.sunscreenService.getCharacteristic(Characteristic.CurrentPosition).updateValue(level);
 			}
 		}.bind(this));
 	},
@@ -89,7 +89,6 @@ HttpSunscreen.prototype =
 	{
 		this.log("FUNCTION getTargetPosition");
 		this.sunscreenService.getCharacteristic(Characteristic.TargetPosition).updateValue(0);
-		callback();
 	},
 	
 	
