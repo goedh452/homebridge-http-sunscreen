@@ -24,7 +24,13 @@ function HttpSunscreen(log, config)
 	this.jsonPath		= config["jsonPath"];
 	this.httpMethod         = config["httpMethod"]   	|| "GET";
 	
-	this.targetPosition = 100;	
+	
+	// Custom variables
+    	this.interval = null;
+    	this.timeout = null;
+    	this.lastPosition = 100; // last known position of the blinds, up by default
+    	this.currentPositionState = 2; // stopped by default
+    	this.currentTargetPosition = 100; // up by default
 }
 
 
@@ -89,15 +95,15 @@ HttpSunscreen.prototype =
 	
 	getTargetPosition: function(callback)
 	{
-		this.log("FUNCTION getTargetPosition");
-		this.sunscreenService.getCharacteristic(Characteristic.TargetPosition).updateValue(0);
+    		this.log("Requested TargetPosition: %s", this.currentTargetPosition);
+    		callback(null, this.currentTargetPosition);
 	},
 	
 	
 	getPositionState: function(callback)
 	{
-		this.log("FUNCTION getPositionState");
-		this.sunscreenService.getCharacteristic(Characteristic.PositionState).updateValue(2);
+    		this.log("Requested PositionState: %s", this.currentPositionState);
+    		callback(null, this.currentPositionState);
 	},
 	
 	
@@ -113,8 +119,15 @@ HttpSunscreen.prototype =
 			return;
 		}
 
+		this.currentTargetPosition = position;
+		const moveUp = (this.currentTargetPosition >= this.lastPosition);
+    		this.log((moveUp ? "Moving up" : "Moving down"));
+		this.sunscreenService.setCharacteristic(Characteristic.PositionState, (moveUp ? 1 : 0));
+		
 		this.log('Setting new target position: ' + position + ' => ' + this.levelUrl.replace('%position%', position));
-		url = this.levelUrl.replace('%position%', position);		
+		url = this.levelUrl.replace('%position%', position);
+		
+    		this.sunscreenService.setCharacteristic(Characteristic.PositionState, (moveUp ? 1 : 0));
 		
 		this.httpRequest(url, "", this.httpMethod, function (error, response, body)
 		{
