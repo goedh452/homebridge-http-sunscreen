@@ -32,6 +32,7 @@ function HttpSunscreen(log, config)
     	this.currentPositionState = 2; // stopped by default
     	this.currentTargetPosition = 100; // up by default
 	
+	var that = this;
 	
 	// Status Polling
 	if (this.statusUrl) 
@@ -39,7 +40,7 @@ function HttpSunscreen(log, config)
 		var powerurl = this.statusUrl;
 		var statusemitter = pollingtoevent(function (done)
 			{
-			this.httpRequest(powerurl, "", "GET", function (error, response, body)
+			that.httpRequest(powerurl, "", "GET", function (error, response, body)
 				{
 					if (error)
 					{
@@ -49,7 +50,7 @@ function HttpSunscreen(log, config)
 							done(new Error("Network failure that must not stop homebridge!"));
 						} catch (err) 
 						{
-							this.log(err.message);
+							that.log(err.message);
 						}
 					} 
 				else 
@@ -57,21 +58,21 @@ function HttpSunscreen(log, config)
 					done(null, body);
 				}
 			})
-		}, { longpolling: true, interval: this.pollingInterval, longpollEventName: "statuspoll" });
+		}, { longpolling: true, interval: that.pollingInterval, longpollEventName: "statuspoll" });
 
 
 		statusemitter.on("statuspoll", function (responseBody) 
 		{
-			if (this.jsonPath) 
+			if (that.jsonPath) 
 			{
 				var json = JSON.parse(responseBody);
 				var level = eval("json." + this.jsonPath);
 				
-				this.log('Current position from status polling: ' + level);
-				this.lastPosition = level;
+				that.log('Current position from status polling: ' + level);
+				that.lastPosition = level;
 			} 
           
-			this.log("Level is currently:", level);
+			that.log("Level is currently:", level);
 		});
 	}
 }
