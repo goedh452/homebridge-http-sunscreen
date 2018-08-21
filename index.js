@@ -66,7 +66,7 @@ function HttpSunscreen(log, config)
 			if (that.jsonPath) 
 			{
 				var json = JSON.parse(responseBody);
-				var level = eval("json." + this.jsonPath);
+				var level = eval("json." + that.jsonPath);
 				
 				that.log('Current position from status polling: ' + level);
 				that.lastPosition = level;
