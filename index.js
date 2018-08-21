@@ -69,8 +69,8 @@ function HttpSunscreen(log, config)
 				var level = eval("json." + that.jsonPath);
 				
 				that.log('Current position from status polling: ' + level);
-				that.lastPosition = level;
-				that.position = level;
+				that.sunscreenService.getCharacteristic(Characteristic.CurrentPosition).updateValue(level);
+				//position = level;
 			} 
 		});
 	}
