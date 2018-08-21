@@ -63,32 +63,8 @@ HttpSunscreen.prototype =
 
 	getCurrentPosition: function (position, callback) 
 	{
-		
-		if (!this.levelUrl || !this.jsonPath) 
-		{
-			this.log("Ignoring request: Missing status properties in config");
-			callback(new Error("No status url defined."));
-			return;
-		}
-
-		var url = this.statusUrl;
-				
-		this.httpRequest(url, "", this.httpMethod, function (error, response, responseBody) 
-		{
-			if (error) 
-			{
-				this.log('HTTP get current position function failed: %s', error.message);
-				callback(error);
-			}
-			else 
-			{
-				var json = JSON.parse(responseBody);
-				var level = eval("json." + this.jsonPath);
-				
-				this.log('Current position: ' + level);
-			 	this.sunscreenService.getCharacteristic(Characteristic.CurrentPosition, level);
-			}
-		}.bind(this));
+		callback(null, this.lastPosition);
+		this.log("FUNCTION: " + getCurrentPosition);
 	},
 	
 	
