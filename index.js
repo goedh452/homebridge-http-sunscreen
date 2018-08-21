@@ -88,6 +88,7 @@ HttpSunscreen.prototype =
 				
 				this.log('Current position: ' + level);
 				this.lastposition = level;
+				callback(null, this.lastposition);
 			}
 		}.bind(this));
 	},
