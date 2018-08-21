@@ -131,10 +131,9 @@ HttpSunscreen.prototype =
 
 		this.currentTargetPosition = position;
 		const moveUp = (this.currentTargetPosition >= this.lastPosition);
-    		this.log((moveUp ? "Moving up" : "Moving down"));
-		this.sunscreenService.setCharacteristic(Characteristic.PositionState, (moveUp ? 1 : 0));
+    		//this.sunscreenService.setCharacteristic(Characteristic.PositionState, (moveUp ? 1 : 0));
 		
-		this.log('Setting new target position: ' + position);
+		this.log(moveUp ? "Moving up" : "Moving down" + "Setting new target position: " + position);
 		url = this.levelUrl.replace('%position%', position);
 		
 		this.httpRequest(url, "", this.httpMethod, function (error, response, body)
@@ -148,7 +147,6 @@ HttpSunscreen.prototype =
 		this.lastPosition = position;
 		this.log("Set lastPosition to: " + this.lastPosition);
 		
-		this.sunscreenService.setCharacteristic(Characteristic.PositionState, 2);
 		callback();
 	},
 	
