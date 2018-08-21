@@ -156,7 +156,7 @@ HttpSunscreen.prototype =
 			.on('get', this.getCurrentPosition.bind(this));
 
     		this.sunscreenService.getCharacteristic(Characteristic.TargetPosition)
-			//.on('get', this.getTargetPosition.bind(this))
+			.on('get', this.getTargetPosition.bind(this))
 			.on('set', this.setTargetPosition.bind(this));
 
 		this.sunscreenService.getCharacteristic(Characteristic.PositionState)
