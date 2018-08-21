@@ -26,7 +26,7 @@ function HttpSunscreen(log, config)
 	
 	
 	// Custom variables
-    	this.lastPosition = 15;
+    	this.lastPosition = 0; 
 	
 	var that = this;
 	
@@ -66,6 +66,7 @@ function HttpSunscreen(log, config)
 				
 				that.log('Current position from status polling: ' + level);
 				that.sunscreenService.getCharacteristic(Characteristic.CurrentPosition).updateValue(level);
+				that.sunscreenService.getCharacteristic(Characteristic.TargetPosition).updateValue(level);
 			} 
 		});
 	}
