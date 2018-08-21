@@ -71,8 +71,6 @@ function HttpSunscreen(log, config)
 				that.log('Current position from status polling: ' + level);
 				that.lastPosition = level;
 			} 
-          
-			that.log("Level is currently:", level);
 		});
 	}
 }
@@ -105,39 +103,6 @@ HttpSunscreen.prototype =
 	},
 		
 
-	getCurrentPosition: function (callback) 
-	{
-		this.log("FUNCTION: getCurrentPosition");
-		
-		if (!this.levelUrl || !this.jsonPath) 
-		{
-			this.log("Ignoring request: Missing status properties in config");
-			callback(new Error("No status url defined."));
-			return;
-		}
-
-		var url = this.statusUrl;
-				
-		this.httpRequest(url, "", this.httpMethod, function (error, response, responseBody) 
-		{
-			if (error) 
-			{
-				this.log('HTTP get current position function failed: %s', error.message);
-				callback(error);
-			}
-			else 
-			{
-				var json = JSON.parse(responseBody);
-				var level = eval("json." + this.jsonPath);
-				
-				this.log('Current position: ' + level);
-				this.lastPosition = level;
-				callback(null, this.lastPosition);
-			}
-		}.bind(this));
-	},
-	
-	
 	getTargetPosition: function(callback)
 	{
     		this.log("Requested TargetPosition: %s", this.lastPosition);
@@ -182,6 +147,8 @@ HttpSunscreen.prototype =
 		
 		this.lastPosition = position;
 		this.log("Set lastPosition to: " + this.lastPosition);
+		
+		this.sunscreenService.setCharacteristic(Characteristic.PositionState, 2);
 		callback();
 	},
 	
