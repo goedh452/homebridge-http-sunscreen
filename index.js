@@ -70,6 +70,7 @@ function HttpSunscreen(log, config)
 				
 				that.log('Current position from status polling: ' + level);
 				that.lastPosition = level;
+				that.position = level;
 			} 
 		});
 	}
@@ -133,7 +134,7 @@ HttpSunscreen.prototype =
 		const moveUp = (this.currentTargetPosition >= this.lastPosition);
     		//this.sunscreenService.setCharacteristic(Characteristic.PositionState, (moveUp ? 1 : 0));
 		
-		this.log(moveUp ? "Moving up" : "Moving down" + "Setting new target position: " + position);
+		this.log(moveUp ? "Moving up" + ": Setting new target position: " + position : "Moving down" + ": Setting new target position: " + position);
 		url = this.levelUrl.replace('%position%', position);
 		
 		this.httpRequest(url, "", this.httpMethod, function (error, response, body)
