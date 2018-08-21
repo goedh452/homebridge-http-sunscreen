@@ -31,6 +31,49 @@ function HttpSunscreen(log, config)
     	this.lastPosition = 100;
     	this.currentPositionState = 2; // stopped by default
     	this.currentTargetPosition = 100; // up by default
+	
+	
+	// Status Polling
+	if (this.statusUrl) 
+	{
+		var powerurl = this.statusUrl;
+		var statusemitter = pollingtoevent(function (done)
+			{
+			this.httpRequest(powerurl, "", "GET", function (error, response, body)
+				{
+					if (error)
+					{
+						that.log('HTTP get status function failed: %s', error.message);
+						try 
+						{
+							done(new Error("Network failure that must not stop homebridge!"));
+						} catch (err) 
+						{
+							that.log(err.message);
+						}
+					} 
+				else 
+				{
+					done(null, body);
+				}
+			})
+		}, { longpolling: true, interval: that.pollingInterval, longpollEventName: "statuspoll" });
+
+
+		statusemitter.on("statuspoll", function (responseBody) 
+		{
+			if (this.jsonPath) 
+			{
+				var json = JSON.parse(responseBody);
+				var level = eval("json." + this.jsonPath);
+				
+				this.log('Current position from status polling: ' + level);
+				this.lastPosition = level;
+			} 
+          
+			this.log("Level is currently:", level);
+		});
+	}
 }
 
 
@@ -128,8 +171,6 @@ HttpSunscreen.prototype =
 		this.log('Setting new target position: ' + position);
 		url = this.levelUrl.replace('%position%', position);
 		
-    		this.sunscreenService.setCharacteristic(Characteristic.PositionState, (moveUp ? 1 : 0));
-		
 		this.httpRequest(url, "", this.httpMethod, function (error, response, body)
 		{
 			if (error)
@@ -155,8 +196,9 @@ HttpSunscreen.prototype =
 
 		this.sunscreenService = new Service.WindowCovering(this.name);
 		
+		this.log("Set status polling");
 		this.sunscreenService.getCharacteristic(Characteristic.CurrentPosition)
-			.on('get', this.getCurrentPosition.bind(this));
+			.on('get', function (callback) { callback(null, this.position) });
 
     		this.sunscreenService.getCharacteristic(Characteristic.TargetPosition)
 			.on('get', this.getTargetPosition.bind(this))
