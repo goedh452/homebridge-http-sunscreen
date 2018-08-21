@@ -82,7 +82,7 @@ HttpSunscreen.prototype =
 				this.log('Current position: ' + level);
 			 	this.sunscreenService.getCharacteristic(Characteristic.CurrentPosition).updateValue(level);
 			}
-		}
+		});
 	},
 	
 	
