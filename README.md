@@ -7,7 +7,7 @@ A plugin for sunscreens that can be controlled with an API.
 # Installation
 
 1. Install homebridge using: `npm install -g homebridge`
-2. Install this plugin: `npm install -g git+https://github.com/goedh452/homebridge-http-sunscreen.git`
+2. Install this plugin: `npm install -g homebridge-http-sunscreen`
 3. Update your `config.json` configuration file
 
 # Configuration
