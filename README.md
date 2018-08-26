@@ -28,7 +28,7 @@ Configuration exampe based on Domoticz JSON API:
 "accessories": [ 
         {
                 "accessory": "HttpSunscreen",
-                "name": "Zonnescherm Boven",
+                "name": "Sunscreen backyard",
                 "levelUrl": "http://192.168.1.114:8081/json.htm?type=command&param=switchlight&idx=178&switchcmd=Set%20Level&level=%position%",
                 "statusUrl": "http://192.168.1.114:8081/json.htm?type=devices&rid=178",
                 "pollingInterval": 5000,
