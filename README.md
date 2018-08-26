@@ -1,10 +1,7 @@
-!!!!!!!! WORK IN PROGRESS !!!!!!!!!
-
-
-# homebridge-http-sprinkler
+# homebridge-http-sunscreen
 A switch plugin for homebridge (https://github.com/nfarina/homebridge) which integrates with HTTP(S) APIs.
 
-A plugin for subscreens that can be controlled with an API.
+A plugin for sunscreens that can be controlled with an API.
 
 
 # Installation
