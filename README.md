@@ -19,6 +19,7 @@ name             | No          | Name in home app (default HTTP Sunscreen)
 levelUrl         | Yes         | URL to set the level of the sunscreen; no up or down URL is used, only the level where 0 is up en 100 is down => %position% should be part of the URL and wil be substituted in the code with the level!
 statusUrl        | No          | URL to check the status via the API
 pollingInterval  | No          | The pollinginterval in milliseconds to check the level of the sunscreen (default 3000 (3 seconds))
+jsonPath         |	No.         |	JSON Path where the status can be found
 httpMethod       | No          | Method for sending requests (default GET)
 
 
